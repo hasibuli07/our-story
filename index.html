@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story - Anniversary Slideshow</title>
+    <!-- Bangla Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .slideshow-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            width: 90vw;
+            max-width: 800px;
+            height: 85vh;
+            max-height: 650px;
+            background: #1e293b;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            text-align: center;
+            pointer-events: none;
+        }
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .slide img {
+            width: auto;
+            height: auto;
+            max-width: 90%;
+            max-height: 55vh;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            display: block;
+        }
+        .slide-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #f8fafc;
+            font-weight: 500;
+        }
+        .bangla-text {
+            font-family: 'Hind Siliguri', sans-serif;
+            font-size: 1.6rem;
+            color: #fbcfe8;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        .highlight {
+            color: #f43f5e;
+            font-weight: 700;
+        }
+        .big-text {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Natural Mobile Layout (Portrait Friendly) */
+        @media (max-width: 768px) {
+            .slide {
+                width: 92vw;
+                height: 82vh;
+                padding: 18px;
+            }
+            .slide img {
+                max-height: 45vh;
+            }
+            .slide-text {
+                font-size: 1.2rem;
+            }
+            .bangla-text {
+                font-size: 1.35rem;
+            }
+            .big-text {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slideshow-container">
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <div class="slide-text">Our journey started on a random day in July 2025</div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="slide">
+        <div class="slide-text">Was there any rain on that day?</div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="slide">
+        <div class="slide-text">The answer is No</div>
+    </div>
+    <!-- Slide 4 -->
+    <div class="slide">
+        <div class="slide-text">But you know what?</div>
+    </div>
+    <!-- Slide 5 -->
+    <div class="slide">
+        <div class="slide-text">You were the rain in my <span class="highlight">“Drought”</span></div>
+    </div>
+    <!-- Slide 6 -->
+    <div class="slide">
+        <div class="slide-text big-text">First Meet<br><span class="highlight">July 19, 2025</span></div>
+    </div>
+    <!-- Slide 7 -->
+    <div class="slide">
+        <div class="slide-text">Some snaps of our journey from then till now.</div>
+    </div>
+    <!-- Slide 8 (Photo 1) -->
+    <div class="slide">
+        <img src="1.jpg" alt="First Meet">
+        <div class="slide-text">First meet: Decided to start a life with you.</div>
+    </div>
+    <!-- Slide 9 (Photo 2) -->
+    <div class="slide">
+        <img src="2.jpg" alt="My Birthday">
+        <div class="slide-text">My Birthday: Your excitement was 100/100.</div>
+    </div>
+    <!-- Slide 10 (Photo 3) -->
+    <div class="slide">
+        <img src="3.jpg" alt="Finally The Day of ours">
+        <div class="slide-text">Finally, the day of ours: August 15, 2025</div>
+    </div>
+    <!-- Slide 11 (Photo 4) -->
+    <div class="slide">
+        <img src="4.jpg" alt="Our Special Snap">
+        <div class="bangla-text">"মুখ লুকিয়ে আমার বুকে তোমার গল্প বলো আমাকে"</div>
+    </div>
+    <!-- Slide 12 -->
+    <div class="slide">
+        <div class="slide-text">Our story has so many cherished moments!</div>
+    </div>
+    <!-- Slide 13 -->
+    <div class="slide">
+        <div class="slide-text">You always backed me up!</div>
+    </div>
+    <!-- Slide 14 -->
+    <div class="slide">
+        <div class="slide-text">There were downs, but you never gave up on me!</div>
+    </div>
+    <!-- Slide 15 -->
+    <div class="slide">
+        <div class="slide-text">You believed in me!</div>
+    </div>
+    <!-- Slide 16 -->
+    <div class="slide">
+        <div class="slide-text">You stayed by my side!</div>
+    </div>
+    <!-- Slide 17 -->
+    <div class="slide">
+        <div class="slide-text">Not out of obligation...</div>
+    </div>
+    <!-- Slide 18 -->
+    <div class="slide">
+        <div class="slide-text">You did it purely out of....!<br><span class="highlight big-text">LOVE</span></div>
+    </div>
+    <!-- Slide 19 -->
+    <div class="slide">
+        <div class="slide-text">And with your help, We have solved the equation.</div>
+    </div>
+    <!-- Slide 20 (Photo 5) -->
+    <div class="slide">
+        <img src="5.jpg" alt="Happy Anniversary">
+        <div class="slide-text big-text">1+1=3;<br>I love you, Darling!<br><span class="highlight">Happy Anniversary! Jaan....!</span></div>
+    </div>
+</div>
+
+<!-- Audio Player -->
+<audio id="bgMusic" preload="auto">
+    <source src="Perfect - Ed Sheeran.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const audio = document.getElementById('bgMusic');
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    let slideTimer = null;
+    let isStarted = false;
+
+    function playAudioAndStart() {
+        if (!isStarted) {
+            isStarted = true;
+            audio.play().then(() => {
+                syncSlidesWithAudio();
+            }).catch(e => {
+                console.log("Audio playback error:", e);
+                startFixedSlideshow();
+            });
+        }
+    }
+
+    // Handle touch & click for mobile browsers
+    window.addEventListener('load', () => {
+        // Attempt autoplay
+        audio.play().then(() => {
+            isStarted = true;
+            syncSlidesWithAudio();
+        }).catch(() => {
+            // Listen for any touch or click on mobile to start music
+            document.addEventListener('touchstart', playAudioAndStart, { once: true });
+            document.addEventListener('click', playAudioAndStart, { once: true });
+        });
+    });
+
+    function syncSlidesWithAudio() {
+        if (isNaN(audio.duration) || audio.duration === 0) {
+            setTimeout(syncSlidesWithAudio, 200);
+            return;
+        }
+
+        const totalDurationMs = audio.duration * 1000;
+        const perSlideDuration = totalDurationMs / slides.length;
+
+        function runNextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide++;
+
+            if (currentSlide < slides.length) {
+                slides[currentSlide].classList.add('active');
+                slideTimer = setTimeout(runNextSlide, perSlideDuration);
+            }
+        }
+
+        slideTimer = setTimeout(runNextSlide, perSlideDuration);
+    }
+
+    function startFixedSlideshow() {
+        const perSlideDuration = 14000;
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, perSlideDuration);
+    }
+</script>
+
+</body>
+</html>
