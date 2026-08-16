@@ -91,7 +91,7 @@
             font-weight: 700;
         }
 
-        /* Overlay Button for Mobile Autoplay Bypass */
+        /* Overlay Screen for Mobile Sound Unlock */
         #startOverlay {
             position: fixed;
             top: 0;
@@ -101,6 +101,7 @@
             background-color: #0f172a;
             z-index: 9999;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -217,8 +218,10 @@
     </div>
 </div>
 
-<audio id="bgMusic" preload="auto" playsinline>
+<!-- Audio Element with explicit mobile compatibility settings -->
+<audio id="bgMusic" preload="auto" playsinline webkit-playsinline>
     <source src="audio.mp3" type="audio/mpeg">
+    <source src="audio.ogg" type="audio/ogg">
 </audio>
 
 <script>
@@ -243,26 +246,49 @@
         }
     }
 
-    function beginSlideshow() {
+    function beginSlideshow(e) {
+        if (e) e.preventDefault();
         if (isRunning) return;
         isRunning = true;
+
+        // Hide start overlay screen
         overlay.style.display = 'none';
 
-        // Unlock Audio for Mobile Safari & Chrome
-        audio.play().then(() => {
-            let durationPerSlide = DEFAULT_SLIDE_DURATION_MS;
-            if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
-                durationPerSlide = (audio.duration * 1000) / slides.length;
+        // Unlock Mobile Web Audio Context
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+                const ctx = new AudioContext();
+                ctx.resume();
             }
-            slideTimer = setInterval(nextSlide, durationPerSlide);
-        }).catch(err => {
-            console.log("Audio play error:", err);
+        } catch (err) {
+            console.log("AudioContext fallback active");
+        }
+
+        // Force play audio on user gesture
+        audio.load();
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                let durationPerSlide = DEFAULT_SLIDE_DURATION_MS;
+                if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
+                    durationPerSlide = (audio.duration * 1000) / slides.length;
+                }
+                slideTimer = setInterval(nextSlide, durationPerSlide);
+            }).catch(err => {
+                console.log("Autoplay issue prevented audio playback:", err);
+                // Start slideshow even if audio fails
+                slideTimer = setInterval(nextSlide, DEFAULT_SLIDE_DURATION_MS);
+            });
+        } else {
             slideTimer = setInterval(nextSlide, DEFAULT_SLIDE_DURATION_MS);
-        });
+        }
     }
 
-    overlay.addEventListener('click', beginSlideshow);
-    overlay.addEventListener('touchstart', beginSlideshow);
+    // Attach both click and touch events for maximum mobile support
+    overlay.addEventListener('click', beginSlideshow, false);
+    overlay.addEventListener('touchstart', beginSlideshow, false);
 </script>
 
 </body>
