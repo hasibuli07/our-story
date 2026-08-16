@@ -1,4 +1,56 @@
-<!DOCTYPE html>
+<!DOCTYPE html><script>
+    const audio = document.getElementById('bgMusic');
+    const slides = document.querySelectorAll('.slide');
+    const overlay = document.getElementById('startOverlay');
+    let currentSlide = 0;
+    let isRunning = false;
+    let slideTimer = null;
+
+    // মোট সময় ২২৯ সেকেন্ড (৩ মিনিট ৩৯ সেকেন্ড) ÷ ২০টি স্লাইড = ১১.৪৫ সেকেন্ড প্রতি স্লাইড
+    const TOTAL_AUDIO_DURATION_SEC = 219; // ২২৯ সেকেন্ড
+    const DEFAULT_SLIDE_DURATION_MS = (TOTAL_AUDIO_DURATION_SEC / slides.length) * 1000; // ১১৪৫০ মিলি-সেকেন্ড
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = currentSlide + 1;
+
+        if (currentSlide < slides.length) {
+            slides[currentSlide].classList.add('active');
+        } else {
+            // ২০ নম্বর স্লাইড শেষ হলে টাইমার বন্ধ হবে
+            if (slideTimer) clearInterval(slideTimer);
+        }
+    }
+
+    function beginSlideshow() {
+        if (isRunning) return;
+        isRunning = true;
+        overlay.style.display = 'none';
+
+        // অডিও চালু করার চেষ্টা
+        audio.play().then(() => {
+            console.log("Audio playing successfully!");
+            
+            // যদি ব্রাউজার থেকে অডিওর দৈর্ঘ্য পাওয়া যায়, তবে সেটি ব্যবহার হবে
+            let durationPerSlide = DEFAULT_SLIDE_DURATION_MS;
+            if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
+                durationPerSlide = (audio.duration * 1000) / slides.length;
+            }
+
+            // স্লাইড শো শুরু
+            slideTimer = setInterval(nextSlide, durationPerSlide);
+
+        }).catch(err => {
+            console.log("Audio playback error (running fallback timer):", err);
+            
+            // অডিও না চললেও গান ৩ মি: ৩৯ সে: হিসেব করে স্লাইড চলবে
+            slideTimer = setInterval(nextSlide, DEFAULT_SLIDE_DURATION_MS);
+        });
+    }
+
+    overlay.addEventListener('click', beginSlideshow);
+    overlay.addEventListener('touchstart', beginSlideshow);
+</script>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
