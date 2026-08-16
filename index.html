@@ -91,7 +91,7 @@
             font-weight: 700;
         }
 
-        /* Overlay Button */
+        /* Overlay Button for Mobile Autoplay Bypass */
         #startOverlay {
             position: fixed;
             top: 0;
@@ -217,7 +217,7 @@
     </div>
 </div>
 
-<audio id="bgMusic" preload="auto">
+<audio id="bgMusic" preload="auto" playsinline>
     <source src="audio.mp3" type="audio/mpeg">
 </audio>
 
@@ -229,7 +229,6 @@
     let isRunning = false;
     let slideTimer = null;
 
-    // ৩ মিনিট ৩৯ সেকেন্ড = ২১৯ সেকেন্ড ÷ ২০ স্লাইড = ১০.৯৫ সেকেন্ড/স্লাইড
     const TOTAL_AUDIO_DURATION_SEC = 219; 
     const DEFAULT_SLIDE_DURATION_MS = (TOTAL_AUDIO_DURATION_SEC / slides.length) * 1000;
 
@@ -249,15 +248,15 @@
         isRunning = true;
         overlay.style.display = 'none';
 
+        // Unlock Audio for Mobile Safari & Chrome
         audio.play().then(() => {
-            console.log("Audio playing successfully!");
             let durationPerSlide = DEFAULT_SLIDE_DURATION_MS;
             if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
                 durationPerSlide = (audio.duration * 1000) / slides.length;
             }
             slideTimer = setInterval(nextSlide, durationPerSlide);
         }).catch(err => {
-            console.log("Audio playback error:", err);
+            console.log("Audio play error:", err);
             slideTimer = setInterval(nextSlide, DEFAULT_SLIDE_DURATION_MS);
         });
     }
