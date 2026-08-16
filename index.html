@@ -91,7 +91,6 @@
             font-weight: 700;
         }
 
-        /* Overlay Screen for Mobile Sound Unlock */
         #startOverlay {
             position: fixed;
             top: 0;
@@ -101,7 +100,6 @@
             background-color: #0f172a;
             z-index: 9999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -218,10 +216,8 @@
     </div>
 </div>
 
-<!-- Audio Element with explicit mobile compatibility settings -->
-<audio id="bgMusic" preload="auto" playsinline webkit-playsinline>
+<audio id="bgMusic" controls style="display:none;" preload="auto">
     <source src="audio.mp3" type="audio/mpeg">
-    <source src="audio.ogg" type="audio/ogg">
 </audio>
 
 <script>
@@ -246,28 +242,14 @@
         }
     }
 
-    function beginSlideshow(e) {
-        if (e) e.preventDefault();
+    function startApp() {
         if (isRunning) return;
         isRunning = true;
-
-        // Hide start overlay screen
         overlay.style.display = 'none';
 
-        // Unlock Mobile Web Audio Context
-        try {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (AudioContext) {
-                const ctx = new AudioContext();
-                ctx.resume();
-            }
-        } catch (err) {
-            console.log("AudioContext fallback active");
-        }
-
-        // Force play audio on user gesture
-        audio.load();
-        const playPromise = audio.play();
+        // Play audio directly
+        audio.currentTime = 0;
+        let playPromise = audio.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
@@ -276,9 +258,8 @@
                     durationPerSlide = (audio.duration * 1000) / slides.length;
                 }
                 slideTimer = setInterval(nextSlide, durationPerSlide);
-            }).catch(err => {
-                console.log("Autoplay issue prevented audio playback:", err);
-                // Start slideshow even if audio fails
+            }).catch(error => {
+                console.log("Audio Error: ", error);
                 slideTimer = setInterval(nextSlide, DEFAULT_SLIDE_DURATION_MS);
             });
         } else {
@@ -286,9 +267,8 @@
         }
     }
 
-    // Attach both click and touch events for maximum mobile support
-    overlay.addEventListener('click', beginSlideshow, false);
-    overlay.addEventListener('touchstart', beginSlideshow, false);
+    overlay.addEventListener('click', startApp);
+    overlay.addEventListener('touchend', startApp);
 </script>
 
 </body>
